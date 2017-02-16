@@ -10,8 +10,8 @@ from gen_image import get_tweet_text, gen_image
 BOTCRED_FILE = '%s/.twurlrc' % os.path.expanduser('~')
 with open(BOTCRED_FILE, 'r') as credfile:
     full_config = yaml.load(credfile)
-    api_key = api_key = full_config['profiles']['uknowwhooktrump'].keys()[0]
-    bot_creds = full_config['profiles']['uknowwhooktrump'][api_key]
+    api_key = api_key = full_config['profiles']['s_volde_trump'].keys()[0]
+    bot_creds = full_config['profiles']['s_volde_trump'][api_key]
 
 CONSUMER_KEY = bot_creds['consumer_key']
 CONSUMER_SECRET = bot_creds['consumer_secret']
@@ -26,4 +26,4 @@ api = tweepy.API(auth)
 # Generate image and tweet
 BOTDIR = sys.path[0]
 img_filename = gen_image(get_tweet_text())
-api.update_with_media('%s/img_filename' % BOTDIR)
+api.update_with_media('%s/%s' % (BOTDIR, img_filename))
