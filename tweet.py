@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-
-import tweepy, time, os, sys, yaml
-from themify import *
+import tweepy
+import os
+import sys
+import yaml
 
 # Load twitter credentials for this bot from config file
-BOTCRED_FILE = '%s/.twurlrc' % os.path.expanduser('~') 
+BOTCRED_FILE = '%s/.twurlrc' % os.path.expanduser('~')
 with open(BOTCRED_FILE, 'r') as credfile:
     full_config = yaml.load(credfile)
     api_key = api_key = full_config['profiles']['uknowwhooktrump'].keys()[0]
@@ -22,5 +23,4 @@ api = tweepy.API(auth)
 
 # Generate image and tweet
 BOTDIR = sys.path[0]
-generate_image()
 api.update_with_media('%s/tweetme.png' % BOTDIR)
