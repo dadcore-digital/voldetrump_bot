@@ -1,3 +1,4 @@
+import uuid
 from textwrap import wrap
 from PIL import Image, ImageDraw, ImageFont
 
@@ -8,17 +9,15 @@ FONT_NAME = 'fonts/crimsontext.ttf'
 FONT_SIZE = 15
 FONT_COLOR = (0, 0, 0)
 LINE_SPACING = 16
-FILENAME = 'tweetme.png'
+IMG_DIR = 'images'
 
 
-def get_tweet_text(tweet_file=TWEET_FILE, tweet_archive=TWEET_ARCHIVE):
-    """Retrieve a passage to tweet and move to archive of tweets."""
-    text = open(tweet_file).readlines()[0]
-
+def get_tweet(img_dir=IMG_DIR):
+    """Get top tweet and move to archive list."""
     # Read top tweet on deck
     with open(TWEET_FILE, 'r') as fin:
         data = fin.readlines()
-        text = data[0]
+        img_file = data[0]
 
     # Now delete that tweet
     with open(TWEET_FILE, 'w') as fout:
@@ -26,14 +25,15 @@ def get_tweet_text(tweet_file=TWEET_FILE, tweet_archive=TWEET_ARCHIVE):
 
     # Archive gif record
     with open(TWEET_ARCHIVE, 'a') as fout:
-        fout.writelines(text)
+        fout.writelines(img_file)
 
-    return text
+    img_file = img_file.replace('\n', '')
+    return '%s/%s' % (img_dir, img_file)
 
 
 def gen_image(text, x=20, y=20, wrap_col=72, font_name=FONT_NAME,
               font_size=FONT_SIZE, font_color=FONT_COLOR,
-              line_spacing=LINE_SPACING, filename=FILENAME):
+              line_spacing=LINE_SPACING, img_dir=IMG_DIR):
     """Create tweet image from supplied text, Returns file name.
 
     Arguments:
@@ -46,7 +46,7 @@ def gen_image(text, x=20, y=20, wrap_col=72, font_name=FONT_NAME,
     font_name -- Name of font to use for rendering (str)
     font_size -- Size of font (int)
     font_color --- Specified as 0-255 3 char tuple
-    filename -- Name of file to save resulting image to
+    filename -- Directory to output image to.
 
     """
     # Wrap text to fit image, not an exact science.
@@ -64,5 +64,17 @@ def gen_image(text, x=20, y=20, wrap_col=72, font_name=FONT_NAME,
 
     # Crop bottom of image and save
     img = img.crop((0, 0, img.width, y + 20))
-    img.save('tweetme.png')
+
+    # Save file
+    filename = uuid.uuid4().get_hex()
+    img.save('%s/%s.png' % (img_dir, filename))
+
     return filename
+
+
+def gen_all_images():
+    """Reference function, loop through all tweets and gen images."""
+    tweets = open('to-tweet.txt').readlines()
+
+    for tweet in tweets:
+        gen_image(tweet)

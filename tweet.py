@@ -3,7 +3,7 @@ import tweepy
 import os
 import sys
 import yaml
-from gen_image import get_tweet_text, gen_image
+from gen_image import get_tweet
 
 
 # Load twitter credentials for this bot from config file
@@ -25,5 +25,5 @@ api = tweepy.API(auth)
 
 # Generate image and tweet
 BOTDIR = sys.path[0]
-img_filename = gen_image(get_tweet_text())
+img_filename = get_tweet()
 api.update_with_media('%s/%s' % (BOTDIR, img_filename))

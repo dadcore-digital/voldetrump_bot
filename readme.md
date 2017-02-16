@@ -18,9 +18,6 @@ Found that regex on [this Stack Overflow answer](http://stackoverflow.com/questi
 
 I got rid of all line breaks and made each pasasge fit on one line. I also did a `Permute Lines -> Random` in Sublime Text, to pre-randomize the entries. 
 
-I then have two files, `to-tweet.txt` and `tweet-archive.txt`, I read the top line from `to-tweet.txt` and use that as the text to feed to the `gen_image()` function.
-
-I then remove that line from `to-tweet.txt` and append it to `tweet-archive.txt`. That file isn't really used for anything, but I like to have it around in case I need to debug.
 
 ### Image Generation
 
@@ -31,3 +28,6 @@ The image manipulation library I use is PIL. It' has sort of ugly text rendering
 Using a free usage yellowed paper background for tweets to make things a bit more interesting. Using the font Crimson Text to hopefully get a kind of book-ish vibe.
 
 Nothing special about writing out the text, just loop through each line of text and write it out. I am wrapping it so it will fit using `textwrap`. Also cropping the extra bottom of the image so there's not a bunch of extra white space at the bottom of short passages.
+
+I pre-generated all imags on my Mac, because the font rendering there is far far better than doing it on a random Linux server, for some reason.
+
