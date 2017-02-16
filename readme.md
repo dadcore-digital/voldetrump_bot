@@ -1,4 +1,6 @@
-# VolderTrump Bot
+# s/Voldemort/Donald Trump Bot
+
+[http://twitter.com/s_volde_trump](@s_volde_trump)
 
 Pretty simple bot that replaces all instances of *Voldemort* with **Donald Trump**, and all instances of *Harry Potter* with **Justin Trudeau**.
 
