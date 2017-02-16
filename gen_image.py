@@ -15,26 +15,26 @@ def get_tweet_text(tweet_file=TWEET_FILE, tweet_archive=TWEET_ARCHIVE):
     """Retrieve a passage to tweet and move to archive of tweets."""
     text = open(tweet_file).readlines()[0]
 
-    # Read gif from file
+    # Read top tweet on deck
     with open(TWEET_FILE, 'r') as fin:
-        data = fin.read().splitlines(True)
-        tweet_gif = data[0]
+        data = fin.readlines()
+        text = data[0]
 
-    # Delete gif from queue tweet file
+    # Now delete that tweet
     with open(TWEET_FILE, 'w') as fout:
         fout.writelines(data[1:])
 
     # Archive gif record
     with open(TWEET_ARCHIVE, 'a') as fout:
-        fout.writelines(tweet_gif)
-        
+        fout.writelines(text)
 
+    return text
 
 
 def gen_image(text, x=20, y=20, wrap_col=72, font_name=FONT_NAME,
               font_size=FONT_SIZE, font_color=FONT_COLOR,
               line_spacing=LINE_SPACING, filename=FILENAME):
-    """Create tweet image from supplied text.
+    """Create tweet image from supplied text, Returns file name.
 
     Arguments:
     text -- Passage of text to create image from (string)
@@ -57,10 +57,12 @@ def gen_image(text, x=20, y=20, wrap_col=72, font_name=FONT_NAME,
     img = Image.open("bg.png").convert('RGBA')
     draw = ImageDraw.Draw(img)
 
+    # Write out each line
     for line in text:
         draw.text((25, y), line, font=font, fill=font_color)
         y += line_spacing
 
+    # Crop bottom of image and save
     img = img.crop((0, 0, img.width, y + 20))
-
     img.save('tweetme.png')
+    return filename

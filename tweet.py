@@ -3,6 +3,8 @@ import tweepy
 import os
 import sys
 import yaml
+from gen_image import get_tweet_text, gen_image
+
 
 # Load twitter credentials for this bot from config file
 BOTCRED_FILE = '%s/.twurlrc' % os.path.expanduser('~')
@@ -23,4 +25,5 @@ api = tweepy.API(auth)
 
 # Generate image and tweet
 BOTDIR = sys.path[0]
-api.update_with_media('%s/tweetme.png' % BOTDIR)
+img_filename = gen_image(get_tweet_text())
+api.update_with_media('%s/img_filename' % BOTDIR)
