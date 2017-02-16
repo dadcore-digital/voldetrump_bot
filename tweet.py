@@ -23,9 +23,15 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
-# Generate image and tweet
 BOTDIR = sys.path[0]
 img, alt_text = get_tweet()
-tweet = api.update_with_media('%s/%s' % (BOTDIR, img))
-media_id = tweet.entities['media'][0]['id']
-api.media_metadata_create(media_id, alt_text)
+
+"""
+Steps:
+    1. Updload media, return media id
+    2. Annotate media id with alt text
+    3. Update status and pass in media id
+"""
+media = api.media_upload('%s/%s' % (BOTDIR, img))
+api.media_metadata_create(media.media_id, alt_text)
+tweet = api.update_status(media_ids=[media.media_id])
