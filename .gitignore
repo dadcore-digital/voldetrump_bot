@@ -1,0 +1,7 @@
+*.pyc
+.DS_Store
+*.DS_Store
+sftp-config.json
+*.log
+generated/
+tweetme.png
