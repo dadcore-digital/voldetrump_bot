@@ -26,6 +26,6 @@ api = tweepy.API(auth)
 # Generate image and tweet
 BOTDIR = sys.path[0]
 img, alt_text = get_tweet()
-tweet = api.update_with_media('%s/%s' % (BOTDIR, img), alt_text=alt_text)
+tweet = api.update_with_media('%s/%s' % (BOTDIR, img))
 media_id = tweet.entities['media'][0]['id']
 api.media_metadata_create(media_id, alt_text)
